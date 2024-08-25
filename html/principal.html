@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ACSE - Plataforma</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilos para el encabezado */
+        header {
+            background-color: #4ab4ec;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header nav li {
+            margin-right: 20px;
+            position: relative;
+        }
+
+        header nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        header nav li:hover > ul {
+            display: block;
+        }
+
+        header nav ul ul {
+            display: none;
+            position: absolute;
+            background-color: #4ab4ec;
+            width: 200px;
+            z-index: 1;
+        }
+
+        header nav ul ul li {
+            display: block;
+            margin: 0;
+        }
+
+        header nav ul ul a {
+            color: #ffffff;
+        }
+
+        header input[type="text"] {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Estilos para la barra lateral */
+        aside {
+            background-color: #ffffff;
+            padding: 20px;
+            width: 200px;
+            float: left;
+        }
+
+        aside h2 {
+            margin-top: 0;
+            color: #0077b6;
+        }
+
+        aside ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        aside li {
+            margin-bottom: 10px;
+        }
+
+        /* Estilos para el contenido principal */
+        main {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        main img {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para el calendario */
+        #calendar {
+            background-color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(98, 158, 247, 0.1);
+        }
+
+        /* Estilos para las interfaces independientes */
+        .interface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .interface-content {
+            background-color: #ffffff;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .interface-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #4ab4ec;
+        }
+
+        .interface-close {
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .interface-search {
+            margin-bottom: 20px;
+        }
+
+        .interface-search input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #4ab4ec;
+            border-radius: 5px;
+        }
+
+        .interface-year {
+            margin-bottom: 20px;
+        }
+
+        .interface-year select {
+            padding: 5px;
+            border: 1px solid #4ab4ec;
+            border-radius: 5px;
+        }
+
+        .interface-image-upload {
+            margin-top: 20px;
+        }
+
+        .interface-image-upload input[type="file"] {
+            display: none;
+        }
+
+        .interface-image-upload label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4ab4ec;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ACSE</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Áreas</a>
+                    <ul>
+                        <li><a href="#" onclick="openInterface('Contabilidad')">Contabilidad</a></li>
+                        <li><a href="#" onclick="openInterface('Tesorería')">Tesorería</a></li>
+                        <li><a href="#" onclick="openInterface('Recursos Humanos')">Recursos Humanos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Archivo</a>
+                    <ul>
+                        <li><a href="#" onclick="openInterface('Facturas')">Facturas</a></li>
+                        <li><a href="#" onclick="openInterface('Causaciones')">Causaciones</a></li>
+                        <li><a href="#" onclick="openInterface('Egresos')">Egresos</a></li>
+                        <li><a href="#" onclick="openInterface('Recibos de caja')">Recibos de caja</a></li>
+                        <li><a href="#" onclick="openInterface('Pagos de aportes')">Pagos de aportes</a></li>
+                        <li><a href="#" onclick="openInterface('Liquidaciones')">Liquidaciones</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Servicios</a>
+                    <ul>
+                        <li><a href="#" onclick="openInterface('Archivo')">Archivo</a></li>
+                        <li><a href="#" onclick="openInterface('Notificaciones')">Notificaciones</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">¿Quiénes somos?</a></li>
+                <li><a href="#">Contáctenos</a></li>
+            </ul>
+        </nav>
+        <input type="text" placeholder="Buscar">
+    </header>
+
+    <aside>
+        <h2>INFORMACIÓN</h2>
+        <ul>
+            <li>Año</li>
+            <li>Tipo de documento</li>
+            <li>Noticias</li>
+            <li>Usuarios</li>
+        </ul>
+        <div id="calendar"></div>
+    </aside>
+
+    <main>
+        <img src="https://images.app.goo.gl/QrZ2YiaxEjWSDfzP8" alt="https://d29jy8ovkd5kcx.cloudfront.net/wp-content/uploads/2021/11/29093133/092.jpg">
+        <img src="https://images.app.goo.gl/zKuj39qNXuHPqEFr5" alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOTIyrfZWmz3AjllM3vO_hBGkfLn1dCwXvpwKERIeHdKWGpff_GCUIQUqJD6AClxpIDwM&usqp=CAU">
+    </main>
+
+    <!-- Interfaces independientes -->
+    <div id="interface" class="interface">
+        <div class="interface-content">
+            <div class="interface-header">
+                <h2>ACSE - <span id="interfaceTitle"></span></h2>
+                <span class="interface-close" onclick="closeInterface()">&times;</span>
+            </div>
+            <div class="interface-year">
+                <select id="yearSelect">
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                </select>
+            </div>
+            <div class="interface-search">
+                <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="searchInterface()">
+            </div>
+            <div id="interfaceContent"></div>
+            <div class="interface-image-upload">
+                <label for="imageUpload">Agregar imagen</label>
+                <input type="file" id="imageUpload" accept="image/*" onchange="handleImageUpload(event)">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Código JavaScript para actualizar el calendario automáticamente
+        var calendar = document.getElementById('calendar');
+        var currentDate = new Date();
+        var month = currentDate.toLocaleString('default', { month: 'long' });
+        var year = currentDate.getFullYear();
+        calendar.innerHTML = month + ' ' + year;
+
+        // Funciones para manejar las interfaces independientes
+        function openInterface(title) {
+            document.getElementById('interface').style.display = 'block';
+            document.getElementById('interfaceTitle').textContent = title;
+            document.getElementById('interfaceContent').innerHTML = `<p>Contenido de ${title}</p>`;
+        }
+
+        function closeInterface() {
+            document.getElementById('interface').style.display = 'none';
+        }
+
+        function searchInterface() {
+            var input, filter, content, p, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            content = document.getElementById('interfaceContent');
+            p = content.getElementsByTagName('p');
+
+            for (i = 0; i < p.length; i++) {
+                txtValue = p[i].textContent || p[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    p[i].style.display = "";
+                } else {
+                    p[i].style.display = "none";
+                }
+            }
+        }
+
+        function handleImageUpload(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100%';
+                document.getElementById('interfaceContent').appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
