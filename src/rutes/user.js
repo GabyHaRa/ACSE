@@ -12,7 +12,8 @@ router.post('/users', (req, res) => {
 });
 // Obtener todos los usuarios 
 router.get('/users', (req, res) => {
-    userSchema
+    const user = userSchema(req.body);
+    user
         .find()
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
