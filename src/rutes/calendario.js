@@ -21,7 +21,7 @@ router.get('/calendario', (req, res) => {
 // Mostrar registro especifico.
 router.get('/calendario/:registro', (req, res) => {
     const { registro } = req.params;
-    registroSchema
+    calendarioSchema
         .finByRegistro(registro)
         .then((data) => res.json(data))
         .catch((error) => res.json({ message: error }));
