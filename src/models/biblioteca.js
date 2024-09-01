@@ -23,7 +23,7 @@ const bibliotecaSchema = mongoose.Schema({
     horaVencimiento: {
         type: String,
         required: true
-    }
+    },
     comentario: {
         type: String,
         required: false
