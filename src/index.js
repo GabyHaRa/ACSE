@@ -1,12 +1,13 @@
 const express = require ('express');
 const app = express();
 const mongoose = require ('mongoose');
-const port = process.env.PORT || 9000;
+// El puerto es decision de cada usuario en este caso utilizo el puerto 8000
+const port = process.env.PORT || 8000;
 require("dotenv").config();
 //Importar ruta de usuario 
 const userRutes = require("./rutes/user");
 
-app.listen(port,() =>  console.log('Servidor escuchando por el puerto',port));
+app.listen(port,() =>  console.log('Servidor escuchando por el puerto : ',port));
 app.use("/",userRutes);
 
 
