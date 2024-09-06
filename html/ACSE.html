@@ -439,5 +439,174 @@
             }, 50);
         }
     </script>
+
+<head>
+    <title>ACSE - Plataforma</title>
+    <style>
+        /* ... (previous styles remain unchanged) ... */
+
+        /* Updated styles for the full calendar */
+        #full-calendar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: black;
+            color: rgba(179, 175, 175, 0.938);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #full-calendar table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #full-calendar th, #full-calendar td {
+            text-align: center;
+            padding: 5px;
+        }
+
+        #full-calendar th {
+            font-weight: bold;
+        }
+
+        #full-calendar .current-day {
+            background-color: rgba(255, 0, 0, 0.3);
+        }
+
+        #full-calendar .holiday {
+            background-color: rgba(255, 255, 0, 0.3);
+            font-weight: bold;
+        }
+
+        #full-calendar .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #full-calendar .calendar-nav button {
+            background-color: #4ab4ec;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        #full-calendar .calendar-nav button:hover {
+            background-color: #0077b6;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (previous HTML content remains unchanged) ... -->
+
+    <!-- Full calendar div -->
+    <div id="full-calendar"></div>
+
+    <script>
+        // ... (previous JavaScript functions remain unchanged) ...
+
+        // Function to check if a date is a holiday (remains unchanged)
+        function isHoliday(year, month, day) {
+            // ... (holiday list remains unchanged) ...
+        }
+
+        // Global variables to keep track of the displayed month and year
+        let currentDisplayMonth;
+        let currentDisplayYear;
+
+        // Updated function to create and update the full calendar
+        function updateFullCalendar(month, year) {
+            const calendarElement = document.getElementById('full-calendar');
+            const currentDate = new Date();
+            
+            currentDisplayMonth = month !== undefined ? month : currentDate.getMonth();
+            currentDisplayYear = year !== undefined ? year : currentDate.getFullYear();
+
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
+            let calendarHTML = `
+                <div class="calendar-nav">
+                    <button onclick="changeMonth(-1)">&#10094;</button>
+                    <h3>${monthNames[currentDisplayMonth]} ${currentDisplayYear}</h3>
+                    <button onclick="changeMonth(1)">&#10095;</button>
+                </div>
+                <table>
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>`;
+
+            const firstDay = new Date(currentDisplayYear, currentDisplayMonth, 1).getDay();
+            const daysInMonth = new Date(currentDisplayYear, currentDisplayMonth + 1, 0).getDate();
+
+            let date = 1;
+            for (let i = 0; i < 6; i++) {
+                calendarHTML += "<tr>";
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        calendarHTML += "<td></td>";
+                    } else if (date > daysInMonth) {
+                        break;
+                    } else {
+                        let className = [];
+                        if (date === currentDate.getDate() && currentDisplayMonth === currentDate.getMonth() && currentDisplayYear === currentDate.getFullYear()) {
+                            className.push('current-day');
+                        }
+                        if (isHoliday(currentDisplayYear, currentDisplayMonth, date)) {
+                            className.push('holiday');
+                        }
+                        calendarHTML += `<td class="${className.join(' ')}">${date}</td>`;
+                        date++;
+                    }
+                }
+                calendarHTML += "</tr>";
+                if (date > daysInMonth) {
+                    break;
+                }
+            }
+
+            calendarHTML += "</table>";
+            calendarElement.innerHTML = calendarHTML;
+        }
+
+        // Function to change the month
+        function changeMonth(delta) {
+            currentDisplayMonth += delta;
+            if (currentDisplayMonth > 11) {
+                currentDisplayMonth = 0;
+                currentDisplayYear++;
+            } else if (currentDisplayMonth < 0) {
+                currentDisplayMonth = 11;
+                currentDisplayYear--;
+            }
+            updateFullCalendar(currentDisplayMonth, currentDisplayYear);
+        }
+
+        // Call updateFullCalendar on page load
+        updateFullCalendar();
+
+        // Update the calendar every day at midnight
+        setInterval(() => {
+            const now = new Date();
+            if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+                updateFullCalendar();
+            }
+        }, 1000); // Check every second
+
+        // ... (rest of the JavaScript code remains unchanged) ...
+    </script>
 </body>
 </html>
